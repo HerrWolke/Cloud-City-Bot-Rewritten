@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to FiveM Advanced Panicbutton 👋</h1>
+<h1 align="center">Welcome to Cloud City Bot Rewritten👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/kefranabg/readme-md-generator#readme" target="_blank">
@@ -28,7 +28,8 @@
 * Among US LFG 
 * Auto Channels with settings
 * Anti Move
-* 
+* Anti Mute
+* Anti Kick
 
 ## 👤 Author
 
@@ -39,7 +40,7 @@
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/MrCloudYT/Panicbutton/issues).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/MrCloudYT/Cloud-City-Bot-Rewritten/issues).
 
 ## Show your support
 
