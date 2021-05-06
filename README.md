@@ -14,7 +14,7 @@
     <img alt="Twitter: __mrcloud" src="https://img.shields.io/twitter/follow/__mrcloud?style=social" />
   </a>
     <a href="https://twitter.com/__mrcloud" target="_blank">
-    <img alt="Last Update" src="https://img.shields.io/github/last-commit/MrCloudYT/Advanced-Panicbutton" />
+    <img alt="Last Update" src="https://img.shields.io/github/last-commit/mrcloudyt/Cloud-City-Bot-Rewritten" />
   </a>
 </p>
 
