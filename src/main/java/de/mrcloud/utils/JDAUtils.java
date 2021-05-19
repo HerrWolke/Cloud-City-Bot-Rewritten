@@ -135,6 +135,27 @@ public class JDAUtils {
         }
     }
 
+    public static void wrongChannel(Member member, TextChannel txtChannel, int deleteAfter) {
+        EmbedBuilder embBuilder = new EmbedBuilder();
+        embBuilder.setTitle("Error");
+        embBuilder.setAuthor(member.getUser().getName(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
+        embBuilder.setColor(Color.decode("#d63031"));
+        embBuilder.setDescription("Cannot execute this command in this channel");
+        txtChannel.sendMessage(embBuilder.build()).queue(message -> message.delete().queueAfter(deleteAfter, TimeUnit.SECONDS));
+
+    }
+
+    public static void wrongChannel(Member member, TextChannel txtChannel) {
+        EmbedBuilder embBuilder = new EmbedBuilder();
+        embBuilder.setTitle("Error");
+        embBuilder.setAuthor(member.getUser().getName(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
+        embBuilder.setColor(Color.decode("#d63031"));
+        embBuilder.setDescription("Cannot execute this command in this channel");
+
+        txtChannel.sendMessage(embBuilder.build()).queue();
+
+    }
+
     public static void noPerm(Member member, TextChannel txtChannel) {
         EmbedBuilder embBuilder = new EmbedBuilder();
         embBuilder.setTitle("Error");
@@ -297,13 +318,14 @@ public class JDAUtils {
             }
         });
     }
+
     public static MessageAction greenBuilderReturn(String Title, String InfoText, Member member, TextChannel txtChannel) {
         EmbedBuilder embBuilder = new EmbedBuilder();
         embBuilder.setTitle(Title);
         embBuilder.setAuthor(member.getUser().getName(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
         embBuilder.setColor(Color.decode("#2ecc71"));
         embBuilder.setDescription(InfoText);
-       return txtChannel.sendMessage(embBuilder.build());
+        return txtChannel.sendMessage(embBuilder.build());
     }
 
 

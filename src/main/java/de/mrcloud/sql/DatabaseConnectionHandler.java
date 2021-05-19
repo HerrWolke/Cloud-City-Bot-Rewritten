@@ -74,6 +74,11 @@ public class DatabaseConnectionHandler {
         this.haltingRefresh = haltingRefresh;
     }
 
+    /**
+     *
+     * @param haltingRefresh If the refreshing should be halted or not
+     * @param delay Delay in ms
+     */
     public void haltRefresh(boolean haltingRefresh, long delay) {
         new Thread(()-> {
             try {

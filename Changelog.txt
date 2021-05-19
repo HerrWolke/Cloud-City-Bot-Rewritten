@@ -1,0 +1,19 @@
+*TODO*
+-Among Us LFG Listeners
+
+*WIP*
+-better statistics
+
+*ADDED/FINISHED*
+-basic statistics
+-time will be saved if the bot is shut down
+
+
+*FINISHED*
+/
+
+*BUGFIXES*
+A BUG WHERE:
+/
+
+

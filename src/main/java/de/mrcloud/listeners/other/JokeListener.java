@@ -1,4 +1,4 @@
-package de.mrcloud.listeners;
+package de.mrcloud.listeners.other;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;

@@ -65,6 +65,22 @@ public class SqlUtils {
         }
         return toGet;
     }
+
+    public static int getSqlColumnInt(Connection connection, String columnName, String memberID, String tableName) {
+        int toGet = 0;
+        try {
+            Statement statement = connection.createStatement();
+
+            ResultSet result = statement.executeQuery("SELECT * FROM " + tableName + "  WHERE UserID = " +memberID + ";");
+            while (result.next()) {
+                toGet = result.getInt(columnName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
+        }
+        return toGet;
+    }
     /*
     Sets a column
      */
@@ -105,6 +121,52 @@ public class SqlUtils {
     }
 
     /**
+     * WARNING: Requieres a database with a collum for userID.
+     *
+     * @param connection The database connecting from which the data should be written to
+     * @param ID         The ID of the user that it should be written to
+     * @param collumName The name of the collum that should be replaced with the int
+     * @param toFillWith The value that should be written
+     * @throws SQLException May cause a {@link SQLException} otherwise
+     */
+    public static void setSQLCollumInt(Connection connection, String ID, String collumName, int toFillWith, String tableName) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM Users WHERE UserID = " + ID + ";");
+            if (result != null && result.next()) {
+                statement.executeQuery("UPDATE " + tableName + " SET " + collumName + " = '" + toFillWith + "' WHERE UserID = " + ID + ";");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * WARNING: Requieres a database with a collum for userID.
+     *
+     * @param connection The database connecting from which the data should be written to
+     * @param ID         The ID of the user that it should be written to
+     * @param collumName The name of the collum that should be replaced with the int
+     * @throws SQLException May cause a {@link SQLException} otherwise
+     */
+    public static void increaseSQLCollumInt(Connection connection, String ID, String collumName, int toAdd) {
+        CloudCityBot2.getInstance().getDbHandler().haltRefresh(true,1000);
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM Users WHERE UserID = " + ID + ";");
+            if (result != null && result.next()) {
+                statement.executeQuery("UPDATE Users SET " + collumName + " = '" + (result.getInt(collumName) + toAdd) + "' WHERE UserID = " + ID + ";");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
      * WARNING: Requires a database with a column for userID.
      *
      * @param connection The database connecting from which the data should be written to
@@ -129,5 +191,7 @@ public class SqlUtils {
     public static String getMemberPreferredLanguage(Member member) {
             return getSqlColumnString(CloudCityBot2.getInstance().getDbHandler().getConnection(),"language",member);
     }
+
+
 
 }

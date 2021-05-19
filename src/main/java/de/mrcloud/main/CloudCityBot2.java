@@ -5,10 +5,13 @@ import de.mrcloud.command.Registerer;
 import de.mrcloud.listeners.AutoChannelCreation;
 import de.mrcloud.listeners.CommandExecutor;
 import de.mrcloud.listeners.JoinListener;
-import de.mrcloud.listeners.JokeListener;
 import de.mrcloud.listeners.amongus.AmongUsLFGVoice;
 import de.mrcloud.listeners.amongus.AmongUsLookingForGroupListener;
 import de.mrcloud.listeners.moderation.DefenseListener;
+import de.mrcloud.listeners.other.JokeListener;
+import de.mrcloud.listeners.statistics.ChannelTimeHandler;
+import de.mrcloud.listeners.statistics.ChannelTimeListener;
+import de.mrcloud.listeners.statistics.MessageCountListener;
 import de.mrcloud.sql.DatabaseConnectionHandler;
 import de.mrcloud.utils.ChannelDuet;
 import de.mrcloud.utils.Settings;
@@ -23,27 +26,26 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
 @SuppressWarnings("SpellCheckingInspection")
 
 public class CloudCityBot2 {
+    private static CloudCityBot2 instance;
     private boolean initalizationFinished = false;
     private Guild server;
     private long roleIDEveryone;
-    private static CloudCityBot2 instance;
     private ShardManager shardMan;
     private DatabaseConnectionHandler dbHandler;
+    private ChannelTimeHandler timeHandler;
 
     public CloudCityBot2() throws LoginException {
         instance = this;
         dbHandler = new DatabaseConnectionHandler();
         dbHandler.handleConnection();
+        timeHandler = new ChannelTimeHandler();
         DefaultShardManagerBuilder builder;
         File file = new File("forcerestarted.txt");
         if (!file.exists()) {
@@ -81,7 +83,7 @@ public class CloudCityBot2 {
 
         builder.setAutoReconnect(true);
         builder.setRequestTimeoutRetry(true);
-        builder.addEventListeners(new AutoChannelCreation(), new JoinListener(), new CommandExecutor(), new AmongUsLookingForGroupListener(), new AmongUsLFGVoice(), new DefenseListener(), new JokeListener());
+        builder.addEventListeners(new AutoChannelCreation(), new JoinListener(), new CommandExecutor(), new AmongUsLookingForGroupListener(), new AmongUsLFGVoice(), new DefenseListener(), new JokeListener(), new ChannelTimeListener(), new MessageCountListener());
 
         Settings.loadSettings();
 
@@ -95,6 +97,10 @@ public class CloudCityBot2 {
 
     public static void main(String[] args) throws LoginException {
         new CloudCityBot2();
+    }
+
+    public static CloudCityBot2 getInstance() {
+        return instance;
     }
 
     public void TurnOffListener() {
@@ -147,6 +153,11 @@ public class CloudCityBot2 {
 
                 }
 
+                for (VoiceChannel channel : server.getVoiceChannels()) {
+                    for (Member member : channel.getMembers()) {
+                        ChannelTimeListener.inVoiceChannel.put(member.getIdLong(), new Date());
+                    }
+                }
 
                 roleIDEveryone = shardMan.getGuilds().get(0).getRoles().get(shardMan.getGuilds().get(0).getRoles().size() - 1).getIdLong();
                 initalizationFinished = true;
@@ -181,6 +192,14 @@ public class CloudCityBot2 {
                             shardMan.setStatus(OnlineStatus.OFFLINE);
                             shardMan.setActivity(Activity.listening("offline"));
                             shardMan.shutdown();
+
+                            Date date = new Date();
+                            System.out.println("Speichere Channel Zeit für " + ChannelTimeListener.inVoiceChannel.entrySet() + " User...");
+                            for (Map.Entry<Long, Date> entry : ChannelTimeListener.inVoiceChannel.entrySet()) {
+
+                                long diff = date.getTime() - entry.getValue().getTime();
+                                timeHandler.updateTime(diff, entry.getKey());
+                            }
                             System.out.println("Bot wird heruntergefahren");
                             System.exit(1);
 
@@ -208,10 +227,6 @@ public class CloudCityBot2 {
 
     public long getRoleIDEveryone() {
         return roleIDEveryone;
-    }
-
-    public static CloudCityBot2 getInstance() {
-        return instance;
     }
 
     public ShardManager getShardMan() {

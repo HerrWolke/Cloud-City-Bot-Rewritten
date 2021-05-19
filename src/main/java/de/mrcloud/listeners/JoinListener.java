@@ -15,6 +15,10 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.annotation.Nonnull;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -25,6 +29,37 @@ public class JoinListener extends ListenerAdapter {
         super.onGuildMemberJoin(e);
         Member member = e.getMember();
         Guild server = e.getGuild();
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy  HH:mm:ss");
+        String formated = member.getTimeJoined().format(format);
+
+
+        Statement statement = null;
+        try {
+          statement  = CloudCityBot2.getInstance().getDbHandler().getConnection().createStatement();
+
+
+            ResultSet resultSetCheck = statement.executeQuery("SELECT * FROM Users WHERE userID = " + member.getUser().getId() + ";");
+
+            if (!resultSetCheck.next()) {
+                statement.executeQuery("INSERT INTO Users(UserName,dateJoined,UserID)" + "\n" + "VALUES('" + member.getUser().getName() + "','" + formated + "'," + member.getId() + ");");
+                statement.executeQuery("INSERT INTO UserStatistics(UserID)" + "\n" + "VALUES(" + member.getId() + ");");
+            }
+
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            System.err.println("An SQL Error");
+            System.out.println(e1.getLocalizedMessage());
+            System.err.println("------------");
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
 
 
         server.getCategoriesByName("╚═════ Introductions ═════╗", true).get(0).createTextChannel("introduction-for-" + member.getUser().getName()).queue(txtChannel -> {

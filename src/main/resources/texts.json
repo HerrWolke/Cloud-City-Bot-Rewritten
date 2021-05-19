@@ -3,13 +3,16 @@
     "settings-message": "Wähle eine Nummer zwischen 1️⃣ -> \uD83D\uDD1F. \n Oder antworte mit einer Nummer",
     "settings-error-message": "Das maximale Channellimit ist 99 oder benutze infinite/inf/none für unbegrenzte User",
     "is-on-cooldown": "Bitte benutze dies nur 1 mal pro Minute. Du musst noch %s Sekunden warten.",
-    "join-error": "Bitte wähle mindestens eine Sache aus!"
+    "join-error": "Bitte wähle mindestens eine Sache aus!",
+    "stats-title": "Deine Statistiken",
+    "stats-desc": "%s Tage, %s Stunde, %s Minuten, %s Sekunden"
   },
-
   "english": {
     "settings-message": "Choose a number between 1️⃣ -> \uD83D\uDD1F. \n Or reply with a custom number in this channel",
     "settings-error-message": "The max channel user limit is 99 or use infinite/inf/none for unlimited users",
     "is-on-cooldown": "Sorry, please only uses this every 1 Minute. You still have to wait %s seconds",
-    "join-error": "Please choose at least one thing!"
+    "join-error": "Please choose at least one thing!",
+    "stats-title": "Your Statistics",
+    "stats-desc": " %s Days,  %s Minutes,  %s Hours,  %s Seconds"
   }
 }

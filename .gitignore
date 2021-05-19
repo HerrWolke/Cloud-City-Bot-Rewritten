@@ -1,0 +1,12 @@
+
+src/main/java/de/mrcloud/utils/Static.java
+.gradle/*
+build/*
+gradle/*
+gradlew
+gradlew.bat
+src/test/*
+src/main/java/de/mrcloud/utils/Settings.java
+src/main/resources/resourceTest.json
+build.gradle
+forcerestarted.txt

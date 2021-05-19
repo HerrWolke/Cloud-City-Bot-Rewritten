@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class AmongUsLFGVoice extends ListenerAdapter {
     public static List<ChannelDuet> channelDuets = new ArrayList<>();
     public static long channelCat = 514511396491231238L;
-    public static long settingsCategoryID = 779417389523009546L;
+    public static long settingsCategoryID = 836965987650633788L;
     public static HashMap<String, Date> isOnCooldown = new HashMap<>();
     public static List<Permission> allow = Arrays.asList(Permission.VIEW_CHANNEL, Permission.MESSAGE_WRITE);
     public static List<Permission> deny = Arrays.asList(Permission.VIEW_CHANNEL, Permission.MESSAGE_WRITE);

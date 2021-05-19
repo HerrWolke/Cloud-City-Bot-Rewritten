@@ -5,10 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20fbaec6-a08f-40fa-a579-2e66be0ed444" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/JDAUtils_1_1_all.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/ChannelTimeCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/DisableMoveCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/UpdateUserListCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/ChannelTimeHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/ChannelTimeListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/MessageCountListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/Registerer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/Registerer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/DisableMove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/JoinListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/JoinListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/JokeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/other/JokeListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/LonelyPersonListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/other/LonelyPersonListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/amongus/AmongUsLFGVoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/amongus/AmongUsLFGVoice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/moderation/DefenseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/moderation/DefenseListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/main/CloudCityBot2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/main/CloudCityBot2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/sql/DatabaseConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/sql/DatabaseConnectionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/JDAUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/JDAUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/Languages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/Languages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/SqlUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/SqlUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/texts.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/texts.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +88,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1kQ6bFLAUwdSVNkU6Zxvxmk372y" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -80,11 +106,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CloudCityBot" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15629742" />
     <property name="project.structure.side.proportion" value="0.41135573" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
