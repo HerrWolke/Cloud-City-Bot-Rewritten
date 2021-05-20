@@ -59,7 +59,6 @@ public abstract class Command {
     }
 
     /**
-     *
      * @param event The event that should be check to match the channel
      * @return Returns true if the channel lock is disabled or the channel that its locked to is matching the event channel
      */

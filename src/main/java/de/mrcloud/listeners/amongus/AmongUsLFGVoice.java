@@ -344,7 +344,7 @@ public class AmongUsLFGVoice extends ListenerAdapter {
                     d3.setMinutes(d3.getMinutes() + 1);
                     isOnCooldown.put(txtChannel.getName(), d3);
                 } else {
-                    JDAUtils.privateBlackBuilder("Oops", Settings.getAsFormatted(member,"settings-error-message", Collections.singletonList(Long.toString(((isOnCooldown.get(txtChannel.getName()).getTime() - d2.getTime()) / 1000)))), member.getUser());
+                    JDAUtils.privateBlackBuilder("Oops", Settings.getAsFormatted(member, "settings-error-message", Collections.singletonList(Long.toString(((isOnCooldown.get(txtChannel.getName()).getTime() - d2.getTime()) / 1000)))), member.getUser());
                     getMessageToRemoveReaction(txtChannel, messageID).get(0).removeReaction(reacEmote.getEmoji(), user).queue();
                 }
             }

@@ -23,35 +23,47 @@ public class UpdateUserListCommand extends Command {
     @Override
     public boolean execute(GuildMessageReceivedEvent e, String[] args) {
         List<Long> userFromDb = new ArrayList<>();
-        if(checkChannelLock(e)) {
-        Connection connection = CloudCityBot2.getInstance().getDbHandler().getConnection();
-                try {
-                    Statement statement = connection.createStatement();
+        List<Long> usersFromOther = new ArrayList<>();
+        if (checkChannelLock(e)) {
+            Connection connection = CloudCityBot2.getInstance().getDbHandler().getConnection();
+            try {
+                Statement statement = connection.createStatement();
 
-                    ResultSet result = statement.executeQuery("SELECT * FROM Users WHERE;");
-                    while (result.next()) {
-                        userFromDb.add(result.getLong("UserID"));
-                    }
+                ResultSet result = statement.executeQuery("SELECT * FROM Users;");
+                ResultSet result2 = statement.executeQuery("SELECT * FROM UserStatistics;");
+                while (result2.next()) {
 
-                    for (Member member : e.getGuild().getMembers()) {
-                        if(!userFromDb.contains(member.getIdLong())) {
-                            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy  HH:mm:ss");
-                            String formated = member.getTimeJoined().format(format);
+                    usersFromOther.add(result2.getLong("userId"));
+                }
 
-                            statement.executeQuery("INSERT INTO Users(UserName,dateJoined,UserID)" + "\n" + "VALUES('" + member.getUser().getName() + "','" + formated + "'," + member.getId() + ");");
-                            statement.executeQuery("INSERT INTO UserStatistics(UserID)" + "\n" + "VALUES(" + member.getId() + ");");
-                        }
-                    }
+                while (result.next()) {
+                    userFromDb.add(result.getLong("UserID"));
 
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    System.out.println(ex.getLocalizedMessage());
                 }
 
 
+                for (Member member : e.getGuild().getMembers()) {
+                    if (!userFromDb.contains(member.getIdLong())) {
+                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy  HH:mm:ss");
+                        String formated = member.getTimeJoined().format(format);
 
-        }else {
-            JDAUtils.wrongChannel(e.getMember(),e.getChannel(),10);
+                        statement.executeQuery("INSERT INTO Users(UserName,dateJoined,UserID)" + "\n" + "VALUES('" + member.getUser().getName() + "','" + formated + "'," + member.getId() + ");");
+
+                    }
+
+                    if (!usersFromOther.contains(member.getIdLong())) {
+                        statement.executeQuery("INSERT INTO UserStatistics(UserID)" + "\n" + "VALUES(" + member.getId() + ");");
+                    }
+                }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                System.out.println(ex.getLocalizedMessage());
+            }
+
+
+        } else {
+            JDAUtils.wrongChannel(e.getMember(), e.getChannel(), 10);
         }
         return false;
     }

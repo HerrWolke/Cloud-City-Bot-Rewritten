@@ -14,9 +14,9 @@ public class CommandExecutor extends ListenerAdapter {
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent e) {
         super.onGuildMessageReceived(e);
 
-        
+
         if (!e.getMessage().getContentRaw().startsWith(Command.PREFIX)) return;
-        
+
         String[] splitContent = e.getMessage().getContentRaw().split("\\s++");
         String command = splitContent[0];
         if (command.startsWith(Command.PREFIX)) {
@@ -26,13 +26,13 @@ public class CommandExecutor extends ListenerAdapter {
             }
 
             for (Command cmd : Settings.commands) {
-                
+
                 if ((Command.PREFIX + cmd.name).equalsIgnoreCase(command)) {
-                    
+
                     if (cmd.category != Command.Category.DEBUG && cmd.category != Command.Category.STAFF) {
                         cmd.execute(e, args);
                     } else {
-                        
+
                         if (cmd.name.equals("startraid")) {
                             String[] args2 = e.getMessage().getContentRaw().split("\\s*\\|\\s*");
                             cmd.execute(e, args2);

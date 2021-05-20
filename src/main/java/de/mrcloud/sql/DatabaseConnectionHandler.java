@@ -12,6 +12,7 @@ public class DatabaseConnectionHandler {
     private Connection connection = null;
     private boolean haltingRefresh;
 
+
     public void handleConnection() {
         new Thread(() -> {
             while (true) {
@@ -60,7 +61,6 @@ public class DatabaseConnectionHandler {
     }
 
 
-
     public Connection getConnection() {
         return connection;
     }
@@ -75,12 +75,11 @@ public class DatabaseConnectionHandler {
     }
 
     /**
-     *
      * @param haltingRefresh If the refreshing should be halted or not
-     * @param delay Delay in ms
+     * @param delay          Delay in ms
      */
     public void haltRefresh(boolean haltingRefresh, long delay) {
-        new Thread(()-> {
+        new Thread(() -> {
             try {
                 Thread.sleep(delay);
             } catch (InterruptedException e) {

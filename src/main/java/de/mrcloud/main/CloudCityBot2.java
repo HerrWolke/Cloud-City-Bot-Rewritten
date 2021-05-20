@@ -9,9 +9,9 @@ import de.mrcloud.listeners.amongus.AmongUsLFGVoice;
 import de.mrcloud.listeners.amongus.AmongUsLookingForGroupListener;
 import de.mrcloud.listeners.moderation.DefenseListener;
 import de.mrcloud.listeners.other.JokeListener;
-import de.mrcloud.listeners.statistics.ChannelTimeHandler;
 import de.mrcloud.listeners.statistics.ChannelTimeListener;
 import de.mrcloud.listeners.statistics.MessageCountListener;
+import de.mrcloud.listeners.statistics.StatisticsHandler;
 import de.mrcloud.sql.DatabaseConnectionHandler;
 import de.mrcloud.utils.ChannelDuet;
 import de.mrcloud.utils.Settings;
@@ -39,13 +39,13 @@ public class CloudCityBot2 {
     private long roleIDEveryone;
     private ShardManager shardMan;
     private DatabaseConnectionHandler dbHandler;
-    private ChannelTimeHandler timeHandler;
+    private StatisticsHandler timeHandler;
 
     public CloudCityBot2() throws LoginException {
         instance = this;
         dbHandler = new DatabaseConnectionHandler();
         dbHandler.handleConnection();
-        timeHandler = new ChannelTimeHandler();
+        timeHandler = new StatisticsHandler();
         DefaultShardManagerBuilder builder;
         File file = new File("forcerestarted.txt");
         if (!file.exists()) {
@@ -235,6 +235,10 @@ public class CloudCityBot2 {
 
     public DatabaseConnectionHandler getDbHandler() {
         return dbHandler;
+    }
+
+    public StatisticsHandler getTimeHandler() {
+        return timeHandler;
     }
 }
 

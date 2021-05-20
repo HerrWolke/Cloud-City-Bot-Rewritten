@@ -36,7 +36,7 @@ public class JoinListener extends ListenerAdapter {
 
         Statement statement = null;
         try {
-          statement  = CloudCityBot2.getInstance().getDbHandler().getConnection().createStatement();
+            statement = CloudCityBot2.getInstance().getDbHandler().getConnection().createStatement();
 
 
             ResultSet resultSetCheck = statement.executeQuery("SELECT * FROM Users WHERE userID = " + member.getUser().getId() + ";");
@@ -98,7 +98,7 @@ public class JoinListener extends ListenerAdapter {
                     JDAUtils.addRoleToMemberByName(e.getMember(), "Deutsch");
 
 
-                    JDAUtils.greenBuilderReturn("Settings", "Klicke die jeweiligen Emotes für die Spiele/Themen für die du dich interessierst. Du kannst auch mehrere anklicken. Wenn du fertig bist, klick auf " +  server.getEmotesByName("prime", true).get(0)  + " \n \n" + server.getEmotesByName("cs", true).get(0).getAsMention() + "CS:GO & Valorant \n Anime" + server.getEmotesByName("anime", true).get(0).getAsMention() + "\n Among Us" + server.getEmotesByName("among", true).get(0).getAsMention(), e.getMember(), txtChannel).queue(message -> {
+                    JDAUtils.greenBuilderReturn("Settings", "Klicke die jeweiligen Emotes für die Spiele/Themen für die du dich interessierst. Du kannst auch mehrere anklicken. Wenn du fertig bist, klick auf " + server.getEmotesByName("prime", true).get(0) + " \n \n" + server.getEmotesByName("cs", true).get(0).getAsMention() + "CS:GO & Valorant \n Anime" + server.getEmotesByName("anime", true).get(0).getAsMention() + "\n Among Us" + server.getEmotesByName("among", true).get(0).getAsMention(), e.getMember(), txtChannel).queue(message -> {
                         message.addReaction(server.getEmotesByName("cs", true).get(0)).queue();
                         message.addReaction(server.getEmotesByName("among", true).get(0)).queue();
                         message.addReaction(server.getEmotesByName("anime", true).get(0)).queue();
@@ -114,7 +114,7 @@ public class JoinListener extends ListenerAdapter {
                     JDAUtils.addRoleToMemberByName(e.getMember(), "English");
 
 
-                    JDAUtils.greenBuilderReturn("Settings", "Click the emotes for the games/subjects you are interested in. You can also click multiple. If you are done, click " +  server.getEmotesByName("prime", true).get(0)  + " \n \n" + server.getEmotesByName("cs", true).get(0).getAsMention() + "CS:GO & Valorant \n Anime" + server.getEmotesByName("anime", true).get(0).getAsMention() + "\n Among Us" + server.getEmotesByName("among", true).get(0).getAsMention(), e.getMember(), txtChannel).queue(message -> {
+                    JDAUtils.greenBuilderReturn("Settings", "Click the emotes for the games/subjects you are interested in. You can also click multiple. If you are done, click " + server.getEmotesByName("prime", true).get(0) + " \n \n" + server.getEmotesByName("cs", true).get(0).getAsMention() + "CS:GO & Valorant \n Anime" + server.getEmotesByName("anime", true).get(0).getAsMention() + "\n Among Us" + server.getEmotesByName("among", true).get(0).getAsMention(), e.getMember(), txtChannel).queue(message -> {
                         message.addReaction(server.getEmotesByName("cs", true).get(0)).queue();
                         message.addReaction(server.getEmotesByName("among", true).get(0)).queue();
                         message.addReaction(server.getEmotesByName("anime", true).get(0)).queue();
@@ -136,11 +136,10 @@ public class JoinListener extends ListenerAdapter {
                         joinedMember.addToReacted("among us");
                     break;
                 case "\u2705":
-                    if (joinedMember.getReactedTo().size() > 0){
+                    if (joinedMember.getReactedTo().size() > 0) {
                         joinedMember.finished(e.getChannel());
                         Settings.newJoinedMembers.remove(member.getId());
-                    }
-                    else
+                    } else
                         JDAUtils.redBuilder("Error", Settings.getLanguageTextByMember(member, "join-error"), member, txtChannel);
                     break;
             }
@@ -184,7 +183,7 @@ public class JoinListener extends ListenerAdapter {
 
         User user = e.getUser();
 
-        if(Settings.newJoinedMembers.isEmpty()) return;
+        if (Settings.newJoinedMembers.isEmpty()) return;
         if (Settings.newJoinedMembers.containsKey(user.getId())) {
             TextChannel txtChannel = e.getGuild().getTextChannelById(Settings.newJoinedMembers.get(user.getId()).getChannelId());
             txtChannel.delete().queue();

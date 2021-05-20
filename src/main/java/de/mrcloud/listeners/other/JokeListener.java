@@ -9,6 +9,12 @@ import javax.annotation.Nonnull;
 import java.text.Normalizer;
 
 public class JokeListener extends ListenerAdapter {
+    public static String removeAccents(String text) {
+        return text == null ? null :
+                Normalizer.normalize(text, Normalizer.Form.NFD)
+                        .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+    }
+
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent e) {
         super.onGuildMessageReceived(e);
@@ -17,7 +23,7 @@ public class JokeListener extends ListenerAdapter {
         Message message = e.getMessage();
 
 
-        if(removeAccents(message.getContentRaw()).toLowerCase().contains("maus")) {
+        if (removeAccents(message.getContentRaw()).toLowerCase().contains("maus")) {
             message.addReaction("\uD83C\uDDE8").queue();
             message.addReaction("\uD83C\uDDFA").queue();
             message.addReaction("\uD83C\uDDF9").queue();
@@ -26,11 +32,5 @@ public class JokeListener extends ListenerAdapter {
         }
 
 
-    }
-
-    public static String removeAccents(String text) {
-        return text == null ? null :
-                Normalizer.normalize(text, Normalizer.Form.NFD)
-                        .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 }

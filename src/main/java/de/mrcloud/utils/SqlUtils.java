@@ -10,10 +10,9 @@ import java.sql.Statement;
 
 public class SqlUtils {
     /**
-     *
      * @param connection The connection this should be executed for
-     * @param column The column this value should be fetched from
-     * @param member Used to find the right line in the collum
+     * @param column     The column this value should be fetched from
+     * @param member     Used to find the right line in the collum
      */
     public static String getSqlColumnString(Connection connection, String column, Member member) {
         String toGet = "";
@@ -55,7 +54,7 @@ public class SqlUtils {
         try {
             Statement statement = connection.createStatement();
 
-            ResultSet result = statement.executeQuery("SELECT * FROM Users WHERE UserID = " +memberID + ";");
+            ResultSet result = statement.executeQuery("SELECT * FROM Users WHERE UserID = " + memberID + ";");
             while (result.next()) {
                 toGet = result.getInt(columnName);
             }
@@ -71,7 +70,7 @@ public class SqlUtils {
         try {
             Statement statement = connection.createStatement();
 
-            ResultSet result = statement.executeQuery("SELECT * FROM " + tableName + "  WHERE UserID = " +memberID + ";");
+            ResultSet result = statement.executeQuery("SELECT * FROM " + tableName + "  WHERE UserID = " + memberID + ";");
             while (result.next()) {
                 toGet = result.getInt(columnName);
             }
@@ -81,6 +80,7 @@ public class SqlUtils {
         }
         return toGet;
     }
+
     /*
     Sets a column
      */
@@ -151,7 +151,7 @@ public class SqlUtils {
      * @throws SQLException May cause a {@link SQLException} otherwise
      */
     public static void increaseSQLCollumInt(Connection connection, String ID, String collumName, int toAdd) {
-        CloudCityBot2.getInstance().getDbHandler().haltRefresh(true,1000);
+        CloudCityBot2.getInstance().getDbHandler().haltRefresh(true, 1000);
         try {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM Users WHERE UserID = " + ID + ";");
@@ -164,6 +164,19 @@ public class SqlUtils {
         }
     }
 
+    public static void increaseSQLCollumInt(Connection connection, String ID, String collumName, int toAdd, String tableName) {
+        CloudCityBot2.getInstance().getDbHandler().haltRefresh(true, 1000);
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM Users WHERE UserID = " + ID + ";");
+            if (result != null && result.next()) {
+                statement.executeQuery("UPDATE " + tableName + " SET " + collumName + " = '" + (result.getInt(collumName) + toAdd) + "' WHERE UserID = " + ID + ";");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**
@@ -189,9 +202,8 @@ public class SqlUtils {
     }
 
     public static String getMemberPreferredLanguage(Member member) {
-            return getSqlColumnString(CloudCityBot2.getInstance().getDbHandler().getConnection(),"language",member);
+        return getSqlColumnString(CloudCityBot2.getInstance().getDbHandler().getConnection(), "language", member);
     }
-
 
 
 }

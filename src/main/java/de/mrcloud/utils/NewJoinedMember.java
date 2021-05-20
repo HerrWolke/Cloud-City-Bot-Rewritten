@@ -14,12 +14,11 @@ public class NewJoinedMember {
     private List<String> reactedTo = new ArrayList<>();
     private long guildId;
 
-    public NewJoinedMember(long memberId,long channelId, Date joinTime) {
+    public NewJoinedMember(long memberId, long channelId, Date joinTime) {
         this.memberId = memberId;
         this.channelId = channelId;
         this.joinTime = joinTime;
     }
-
 
 
     public long getChannelId() {
@@ -74,7 +73,7 @@ public class NewJoinedMember {
     public void finished(TextChannel textChannel) {
         System.out.println(Arrays.toString(reactedTo.toArray()));
         for (String roleName : reactedTo) {
-            JDAUtils.addRoleToMemberByName(textChannel.getGuild().getMemberById(memberId),roleName);
+            JDAUtils.addRoleToMemberByName(textChannel.getGuild().getMemberById(memberId), roleName);
         }
         textChannel.getGuild().getTextChannelById(channelId).delete().queue();
         Settings.newJoinedMembers.remove(Long.toString(memberId));

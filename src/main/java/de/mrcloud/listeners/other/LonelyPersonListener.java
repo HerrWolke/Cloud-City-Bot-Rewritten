@@ -9,28 +9,28 @@ import javax.annotation.Nonnull;
 import java.text.Normalizer;
 
 public class LonelyPersonListener extends ListenerAdapter {
+    public static String removeAccents(String text) {
+        return text == null ? null :
+                Normalizer.normalize(text, Normalizer.Form.NFD)
+                        .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+    }
+
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent e) {
         super.onGuildMessageReceived(e);
 
         Member member = e.getMember();
         Message message = e.getMessage();
-        String messageContent =message.getContentRaw();
+        String messageContent = message.getContentRaw();
 
 //
 //        if(isSynonym())
 
     }
 
-    public boolean isSynonym(String toSearchForSyn,String syn) {
+    public boolean isSynonym(String toSearchForSyn, String syn) {
 
 //        if (!(synsets.length > 0 )) return true;
         return false;
-    }
-
-    public static String removeAccents(String text) {
-        return text == null ? null :
-                Normalizer.normalize(text, Normalizer.Form.NFD)
-                        .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 }

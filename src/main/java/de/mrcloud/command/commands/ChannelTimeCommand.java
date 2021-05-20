@@ -19,7 +19,7 @@ import java.sql.Connection;
 public class ChannelTimeCommand extends Command {
 
     public ChannelTimeCommand() {
-        super("stats", "", "", Category.STATISTICS,709298267208548433L);
+        super("stats", "", "", Category.STATISTICS, 709298267208548433L);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ChannelTimeCommand extends Command {
             embedBuilder.setTitle(Settings.languages.getTranslation(SqlUtils.getMemberPreferredLanguage(member), "stats-title"));
             embedBuilder.setAuthor(author.getName(), author.getAvatarUrl(), author.getAvatarUrl());
             embedBuilder.setColor(Color.decode("#d63031"));
-            embedBuilder.setDescription("**CHANNEL ZEIT:** \n" + getFormattedTime(member) + "\n \n" + "**NACHRICHTEN:** \n" + SqlUtils.getSqlColumnInt( CloudCityBot2.getInstance().getDbHandler().getConnection(), "MessageCount", member));
+            embedBuilder.setDescription("**CHANNEL ZEIT:** \n" + getFormattedTime(member) + "\n \n" + "**NACHRICHTEN:** \n" + SqlUtils.getSqlColumnInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), "MessageCount", member));
             textChannel.sendMessage(embedBuilder.build()).queue();
         }
 

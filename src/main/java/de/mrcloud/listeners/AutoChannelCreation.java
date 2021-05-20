@@ -61,7 +61,7 @@ public class AutoChannelCreation extends ListenerAdapter {
             embBuilder.setAuthor(member.getUser().getName(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
             embBuilder.setColor(Color.decode("#00a8ff"));
 
-            embBuilder.addField("Size", Settings.getLanguageTextByMember(member,"settings-message"), true);
+            embBuilder.addField("Size", Settings.getLanguageTextByMember(member, "settings-message"), true);
 
 
             newTextChannel.sendMessage(embBuilder.build()).queue((message) -> {
@@ -103,7 +103,7 @@ public class AutoChannelCreation extends ListenerAdapter {
             embBuilder.setTitle("Channel Size");
             embBuilder.setAuthor(member.getUser().getName(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
             embBuilder.setColor(Color.decode("#00a8ff"));
-            embBuilder.addField("Size", Settings.getLanguageTextByMember(member,"settings-message"), true);
+            embBuilder.addField("Size", Settings.getLanguageTextByMember(member, "settings-message"), true);
 
 
             newTextChannel.sendMessage(embBuilder.build()).queue((message) -> {
@@ -212,7 +212,7 @@ public class AutoChannelCreation extends ListenerAdapter {
 
             int channelSize = Integer.parseInt(e.getMessage().getContentRaw());
             if (channelSize > 99) {
-                JDAUtils.redBuilder("Error", Settings.getLanguageTextByMember(member,"settings-error-message"), member, txtChannel, 10);
+                JDAUtils.redBuilder("Error", Settings.getLanguageTextByMember(member, "settings-error-message"), member, txtChannel, 10);
                 return;
             }
             int channelNumber = Integer.parseInt(txtChannel.getName().replaceAll("-", " ").split("\\s++")[2]);
@@ -344,12 +344,13 @@ public class AutoChannelCreation extends ListenerAdapter {
                     d3.setMinutes(d3.getMinutes() + 1);
                     isOnCooldown.put(txtChannel.getName(), d3);
                 } else {
-                    JDAUtils.privateBlackBuilder("Oops",  Settings.getAsFormatted(member,"settings-error-message", Collections.singletonList(Long.toString(((isOnCooldown.get(txtChannel.getName()).getTime() - d2.getTime()) / 1000)))), member.getUser());
+                    JDAUtils.privateBlackBuilder("Oops", Settings.getAsFormatted(member, "settings-error-message", Collections.singletonList(Long.toString(((isOnCooldown.get(txtChannel.getName()).getTime() - d2.getTime()) / 1000)))), member.getUser());
                     getMessageToRemoveReaction(txtChannel, messageID).get(0).removeReaction(reacEmote.getEmoji(), user).queue();
                 }
             }
         }
     }
+
     public List<Message> getMessageToRemoveReaction(MessageChannel channel, String messageID) {
         return channel.getIterableHistory().stream()
                 .limit(4)

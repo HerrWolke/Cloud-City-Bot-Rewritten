@@ -8,12 +8,12 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class DisableMoveCommand extends Command {
     public DisableMoveCommand() {
-        super("disable","","",Category.STAFF);
+        super("disable", "", "", Category.STAFF);
     }
 
     @Override
     public boolean execute(GuildMessageReceivedEvent e, String[] args) {
-        if(e.getMember().getId().equalsIgnoreCase(Static.CLOUD_ID_STRING)) {
+        if (e.getMember().getId().equalsIgnoreCase(Static.CLOUD_ID_STRING)) {
             switch (args[0]) {
                 case "move":
                     DefenseListener.cloudHasDisableMove = !DefenseListener.cloudHasDisableMove;

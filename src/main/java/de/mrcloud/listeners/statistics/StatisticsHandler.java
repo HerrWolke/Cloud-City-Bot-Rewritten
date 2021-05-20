@@ -1,19 +1,117 @@
 package de.mrcloud.listeners.statistics;
 
 import de.mrcloud.main.CloudCityBot2;
+import de.mrcloud.sql.DatabaseConnectionHandler;
 import de.mrcloud.utils.SqlUtils;
 import net.dv8tion.jda.api.entities.Member;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class ChannelTimeHandler {
+public class StatisticsHandler {
     private LinkedHashMap<Long, Date> userVoiceChannelTime;
 
-    public ChannelTimeHandler() {
+    public StatisticsHandler() {
         userVoiceChannelTime = new LinkedHashMap<>();
         moveNextMonth();
+    }
+
+    private void calculateExperienceTime(long diff, long memberId) {
+
+        double xp = Math.round(TimeUnit.MILLISECONDS.toSeconds(diff) * 0.06 * 10.0) / 10.0;
+        System.out.println(xp);
+        calculateLevel(xp, memberId);
+    }
+
+    private void calculateExperienceMessage(long memberId) {
+        double xp = 10.0;
+        calculateLevel(xp, memberId);
+
+    }
+
+    private void updateMessageCount(long memberId) {
+        SqlUtils.increaseSQLCollumInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), Long.toString(memberId), "messageCount", 1, "userStatistics");
+    }
+
+    private void calculateLevel(double xp, long memberId) {
+
+        DatabaseConnectionHandler handler = CloudCityBot2.getInstance().getDbHandler();
+        handler.haltRefresh(true, 2000);
+        Connection connection = handler.getConnection();
+        Statement statement = null;
+        try {
+            System.out.println(memberId);
+            statement = connection.createStatement();
+            ResultSet res = statement.executeQuery("SELECT * FROM UserStatistics WHERE userId = " + memberId);
+            res.first();
+            int currentLevel = res.getInt("level");
+            double currentXp = res.getDouble("xp");
+            System.out.println(currentXp);
+
+            double xpToLevelUp = Math.round((100 * Math.pow(1.16, currentLevel)) * 10.0) / 10.0;
+            int levelUps = 0;
+
+            while ((currentXp + xp) >= xpToLevelUp) {
+                levelUps++;
+                xpToLevelUp = Math.round((100 * Math.pow(1.16, currentLevel + levelUps)) * 10.0) / 10.0;
+
+            }
+
+            if (levelUps > 0) {
+                statement.executeUpdate("UPDATE UserStatistics SET level = " + (currentLevel + levelUps) + " WHERE userId = " + memberId);
+                System.out.println("Upping user level");
+                calculateCoins(currentLevel, memberId, levelUps);
+            }
+            statement.executeQuery("UPDATE UserStatistics SET xp = " + (currentXp + xp) + " WHERE userId = " + memberId);
+
+            System.out.println("Setting xp to " + currentXp + " + " + xp);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+
+    }
+
+
+    private void calculateCoins(int level, long memberId, int levelUps) {
+        double coins = 0;
+        for (int i = 0; i < levelUps; i++) {
+            coins =  50 + Math.round(level + i / 2.0 * 10.0) / 10.0;
+        }
+
+
+        DatabaseConnectionHandler handler = CloudCityBot2.getInstance().getDbHandler();
+        handler.haltRefresh(true, 2000);
+        Connection connection = handler.getConnection();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet res = statement.executeQuery("SELECT * FROM UserStatistics WHERE userId = " + memberId);
+            res.first();
+            double currentCoins = res.getDouble("coins");
+
+            statement.executeQuery("UPDATE Users SET coins = " + (currentCoins + coins) + " WHERE userId = " + memberId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
     }
 
     private void moveNextMonth() {
@@ -41,10 +139,11 @@ public class ChannelTimeHandler {
     public void updateTime(long diff, long memberId) {
         updateTimeThisMonth(diff, memberId);
         updateAllTime(diff, memberId);
+        calculateExperienceTime(diff, memberId);
     }
 
     private void updateTimeThisMonth(long diff, long memberId) {
-    
+
         Connection connection = CloudCityBot2.getInstance().getDbHandler().getConnection();
         diff += TimeUnit.SECONDS.toMillis((SqlUtils.getSqlColumnInt(connection, "thisMonthSec", Long.toString(memberId), "UserStatistics")));
         diff += TimeUnit.MINUTES.toMillis((SqlUtils.getSqlColumnInt(connection, "thisMonthMin", Long.toString(memberId), "UserStatistics")));
@@ -96,5 +195,10 @@ public class ChannelTimeHandler {
         SqlUtils.setSQLCollumInt(connection, memberId, "lastMonthMin", SqlUtils.getSqlColumnInt(connection, "thisMonthMin", memberId, "UserStatistics"), "UserStatistics");
         SqlUtils.setSQLCollumInt(connection, memberId, "lastMonthHour", SqlUtils.getSqlColumnInt(connection, "thisMonthHour", memberId, "UserStatistics"), "UserStatistics");
         SqlUtils.setSQLCollumInt(connection, memberId, "lastMonthDay", SqlUtils.getSqlColumnInt(connection, "thisMonthDay", memberId, "UserStatistics"), "UserStatistics");
+    }
+
+    public void receivedMessage(long memberId) {
+        calculateExperienceMessage(memberId);
+        updateMessageCount(memberId);
     }
 }
