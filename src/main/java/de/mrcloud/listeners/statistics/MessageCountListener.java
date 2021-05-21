@@ -10,7 +10,7 @@ public class MessageCountListener extends ListenerAdapter {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent e) {
         super.onGuildMessageReceived(e);
 
-        if (e.isWebhookMessage() || e.getMessage().getContentRaw().startsWith("!") || e.getMessage().getContentRaw().startsWith(";") || e.getMessage().getContentRaw().startsWith("&"))
+        if (e.isWebhookMessage() || e.getMessage().getContentRaw().startsWith("!") || e.getMessage().getContentRaw().startsWith(";") || e.getMessage().getContentRaw().startsWith("&") || e.getAuthor().isBot())
             return;
 
         CloudCityBot2.getInstance().getTimeHandler().receivedMessage(e.getMember().getIdLong());

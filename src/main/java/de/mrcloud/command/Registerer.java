@@ -1,10 +1,7 @@
 package de.mrcloud.command;
 
 
-import de.mrcloud.command.commands.ChannelTimeCommand;
-import de.mrcloud.command.commands.DisableMoveCommand;
-import de.mrcloud.command.commands.ResetCommand;
-import de.mrcloud.command.commands.UpdateUserListCommand;
+import de.mrcloud.command.commands.*;
 import de.mrcloud.utils.Settings;
 
 public class Registerer {
@@ -13,7 +10,8 @@ public class Registerer {
                 new ResetCommand(),
                 new DisableMoveCommand(),
                 new ChannelTimeCommand(),
-                new UpdateUserListCommand()
+                new UpdateUserListCommand(),
+                new UpdateExperienceForAllUsersCommand()
         );
     }
 }

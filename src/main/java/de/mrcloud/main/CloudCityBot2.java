@@ -114,7 +114,6 @@ public class CloudCityBot2 {
                 e.printStackTrace();
             }
 
-            System.out.println(shardMan.getGuilds().get(0));
             if (shardMan.getGuilds().get(0) != null) {
                 server = shardMan.getGuilds().get(0);
                 List<Role> roles = new ArrayList<>(server.getRoles());

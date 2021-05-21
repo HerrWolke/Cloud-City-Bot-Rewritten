@@ -5,26 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20fbaec6-a08f-40fa-a579-2e66be0ed444" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/ShopCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/UpdateExperienceForAllUsersCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/Command.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/Registerer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/Registerer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/ChannelTimeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/ChannelTimeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/DisableMoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/DisableMoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/ResetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/ResetCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/UpdateUserListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/command/commands/UpdateUserListCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/AutoChannelCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/AutoChannelCreation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/CommandExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/CommandExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/JoinListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/JoinListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/amongus/AmongUsLFGVoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/amongus/AmongUsLFGVoice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/other/JokeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/other/JokeListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/other/LonelyPersonListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/other/LonelyPersonListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/ChannelTimeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/StatisticsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/ChannelTimeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/ChannelTimeListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/MessageCountListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/MessageCountListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/StatisticsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/listeners/statistics/StatisticsHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/main/CloudCityBot2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/main/CloudCityBot2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/sql/DatabaseConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/sql/DatabaseConnectionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/NewJoinedMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/NewJoinedMember.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/SqlUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mrcloud/utils/SqlUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +122,7 @@
       <command value="gradle wrapper --gradle-version 6.7.1" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.CloudCityBot2">
+  <component name="RunManager" selected="Application.Test">
     <configuration name="CloudCityBot2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.mrcloud.main.CloudCityBot2" />
       <module name="CloudCityBotRewrite.main" />

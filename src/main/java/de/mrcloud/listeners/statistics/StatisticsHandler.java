@@ -2,6 +2,7 @@ package de.mrcloud.listeners.statistics;
 
 import de.mrcloud.main.CloudCityBot2;
 import de.mrcloud.sql.DatabaseConnectionHandler;
+import de.mrcloud.utils.JDAUtils;
 import de.mrcloud.utils.SqlUtils;
 import net.dv8tion.jda.api.entities.Member;
 
@@ -14,56 +15,65 @@ import java.util.concurrent.TimeUnit;
 
 public class StatisticsHandler {
     private LinkedHashMap<Long, Date> userVoiceChannelTime;
+    public static final double xpNeededForLevelUpGrowthFactor = 1.16;
+    public static final double xpNeededForFirstLevel = 100;
+    public static final double xpFactorPerSecondChannelTime = 0.023;
+    public static final double baseCoinsPerLevel = 50.0;
+    public static final double coinFactorOfLevel = 0.83;
 
     public StatisticsHandler() {
         userVoiceChannelTime = new LinkedHashMap<>();
         moveNextMonth();
     }
 
-    private void calculateExperienceTime(long diff, long memberId) {
+    public void calculateExperienceTime(long diff, long memberId) {
 
-        double xp = Math.round(TimeUnit.MILLISECONDS.toSeconds(diff) * 0.06 * 10.0) / 10.0;
-        System.out.println(xp);
+        double xp = Math.round(TimeUnit.MILLISECONDS.toSeconds(diff) * xpFactorPerSecondChannelTime * 10.0) / 10.0;
         calculateLevel(xp, memberId);
     }
 
-    private void calculateExperienceMessage(long memberId) {
-        double xp = 10.0;
+    public void calculateExperienceMessage(long memberId, double messageAmount) {
+        double xp = messageAmount * 12.0;
         calculateLevel(xp, memberId);
 
     }
 
     private void updateMessageCount(long memberId) {
-        SqlUtils.increaseSQLCollumInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), Long.toString(memberId), "messageCount", 1, "userStatistics");
+        SqlUtils.increaseSQLCollumInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), Long.toString(memberId), "messageCount", 1, "UserStatistics");
     }
 
     private void calculateLevel(double xp, long memberId) {
 
         DatabaseConnectionHandler handler = CloudCityBot2.getInstance().getDbHandler();
-        handler.haltRefresh(true, 2000);
+        handler.haltRefresh(true, 5000);
         Connection connection = handler.getConnection();
         Statement statement = null;
         try {
-            System.out.println(memberId);
+            System.out.println("Calcing level for " + memberId);
             statement = connection.createStatement();
             ResultSet res = statement.executeQuery("SELECT * FROM UserStatistics WHERE userId = " + memberId);
+
+            CloudCityBot2 cloudCityBot2 = CloudCityBot2.getInstance();
+            if (!res.isBeforeFirst()) {
+                JDAUtils.redBuilder("Fatal Error","Attempted to update database information for user " + cloudCityBot2.getServer().getMemberById(memberId).getAsMention() + " but they dont have an entry in the database",cloudCityBot2.getServer().getSelfMember(), cloudCityBot2.getServer().getTextChannelById(617062477812989980L));
+            }
+
             res.first();
             int currentLevel = res.getInt("level");
             double currentXp = res.getDouble("xp");
-            System.out.println(currentXp);
 
-            double xpToLevelUp = Math.round((100 * Math.pow(1.16, currentLevel)) * 10.0) / 10.0;
+            double xpToLevelUp = Math.round((xpNeededForFirstLevel * Math.pow(xpNeededForLevelUpGrowthFactor, currentLevel)) * 10.0) / 10.0;
             int levelUps = 0;
 
             while ((currentXp + xp) >= xpToLevelUp) {
                 levelUps++;
-                xpToLevelUp = Math.round((100 * Math.pow(1.16, currentLevel + levelUps)) * 10.0) / 10.0;
+                xpToLevelUp = Math.round((xpNeededForFirstLevel * Math.pow(xpNeededForLevelUpGrowthFactor, currentLevel + levelUps)) * 10.0) / 10.0;
 
             }
 
             if (levelUps > 0) {
                 statement.executeUpdate("UPDATE UserStatistics SET level = " + (currentLevel + levelUps) + " WHERE userId = " + memberId);
-                System.out.println("Upping user level");
+                System.out.println("Upping user level to " + levelUps);
                 calculateCoins(currentLevel, memberId, levelUps);
             }
             statement.executeQuery("UPDATE UserStatistics SET xp = " + (currentXp + xp) + " WHERE userId = " + memberId);
@@ -87,8 +97,9 @@ public class StatisticsHandler {
     private void calculateCoins(int level, long memberId, int levelUps) {
         double coins = 0;
         for (int i = 0; i < levelUps; i++) {
-            coins =  50 + Math.round(level + i / 2.0 * 10.0) / 10.0;
+            coins +=  baseCoinsPerLevel + Math.round((level + i) * coinFactorOfLevel * 10.0) / 10.0;
         }
+
 
 
         DatabaseConnectionHandler handler = CloudCityBot2.getInstance().getDbHandler();
@@ -97,10 +108,11 @@ public class StatisticsHandler {
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            ResultSet res = statement.executeQuery("SELECT * FROM UserStatistics WHERE userId = " + memberId);
+            ResultSet res = statement.executeQuery("SELECT * FROM Users WHERE userId = " + memberId);
             res.first();
             double currentCoins = res.getDouble("coins");
 
+            System.out.println("Settings coins to " + currentCoins + " + " + coins);
             statement.executeQuery("UPDATE Users SET coins = " + (currentCoins + coins) + " WHERE userId = " + memberId);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -198,7 +210,7 @@ public class StatisticsHandler {
     }
 
     public void receivedMessage(long memberId) {
-        calculateExperienceMessage(memberId);
+        calculateExperienceMessage(memberId,1);
         updateMessageCount(memberId);
     }
 }
