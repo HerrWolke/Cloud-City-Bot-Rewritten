@@ -30,6 +30,11 @@
 * Anti Move
 * Anti Mute
 * Anti Kick
+* Leveling System
+* XP System
+* Coin System
+* Moderation Features (W.I.P)
+* Stats (Channel time - lifetime - this/last month, message count)
 
 ## 👤 Author
 
