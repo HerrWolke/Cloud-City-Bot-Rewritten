@@ -1,4 +1,4 @@
-package de.mrcloud.utils;
+package de.mrcloud.utils.sql;
 
 import de.mrcloud.main.CloudCityBot2;
 import net.dv8tion.jda.api.entities.Member;
@@ -29,6 +29,8 @@ public class SqlUtils {
         }
         return toGet;
     }
+
+
 
     /*
     Same as for the string but returns a int
@@ -81,6 +83,22 @@ public class SqlUtils {
         return toGet;
     }
 
+
+    public static double getSqlCollumDouble(Connection connection, String columnName, String memberID, String tableName) {
+        double toGet = 0;
+        try {
+            Statement statement = connection.createStatement();
+
+            ResultSet result = statement.executeQuery("SELECT * FROM " + tableName + "  WHERE UserID = " + memberID + ";");
+            while (result.next()) {
+                toGet = result.getDouble(columnName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
+        }
+        return toGet;
+    }
     /*
     Sets a column
      */

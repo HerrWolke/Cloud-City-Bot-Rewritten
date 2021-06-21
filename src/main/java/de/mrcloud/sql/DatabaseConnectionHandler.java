@@ -1,7 +1,7 @@
 package de.mrcloud.sql;
 
 
-import de.mrcloud.utils.Settings;
+import de.mrcloud.utils.settings.Settings;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

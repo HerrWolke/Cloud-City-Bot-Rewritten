@@ -1,8 +1,8 @@
 package de.mrcloud.listeners.amongus;
 
 import de.mrcloud.utils.ChannelDuet;
-import de.mrcloud.utils.JDAUtils;
-import de.mrcloud.utils.Settings;
+import de.mrcloud.utils.discord.JDAUtils;
+import de.mrcloud.utils.settings.Settings;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;

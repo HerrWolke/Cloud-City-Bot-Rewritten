@@ -1,9 +1,10 @@
 package de.mrcloud.listeners.statistics;
 
+import com.google.common.collect.ImmutableMap;
 import de.mrcloud.main.CloudCityBot2;
 import de.mrcloud.sql.DatabaseConnectionHandler;
-import de.mrcloud.utils.JDAUtils;
-import de.mrcloud.utils.SqlUtils;
+import de.mrcloud.utils.discord.JDAUtils;
+import de.mrcloud.utils.sql.SqlUtils;
 import net.dv8tion.jda.api.entities.Member;
 
 import java.sql.Connection;
@@ -12,14 +13,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class StatisticsHandler {
-    private LinkedHashMap<Long, Date> userVoiceChannelTime;
     public static final double xpNeededForLevelUpGrowthFactor = 1.16;
     public static final double xpNeededForFirstLevel = 100;
     public static final double xpFactorPerSecondChannelTime = 0.023;
     public static final double baseCoinsPerLevel = 50.0;
     public static final double coinFactorOfLevel = 0.83;
+    public static final ImmutableMap<Integer, String> rolesPerLevel = ImmutableMap.of(0, "Raindrop \uD83D\uDCA7", 5, "Snowflake❄️", 10, "Hailstone\uD83E\uDDCA", 20, "Snowball ⚪", 30, "Snowman ☃️");
+    private LinkedHashMap<Long, Date> userVoiceChannelTime;
 
     public StatisticsHandler() {
         userVoiceChannelTime = new LinkedHashMap<>();
@@ -49,13 +52,18 @@ public class StatisticsHandler {
         Connection connection = handler.getConnection();
         Statement statement = null;
         try {
-            System.out.println("Calcing level for " + memberId);
             statement = connection.createStatement();
             ResultSet res = statement.executeQuery("SELECT * FROM UserStatistics WHERE userId = " + memberId);
 
             CloudCityBot2 cloudCityBot2 = CloudCityBot2.getInstance();
             if (!res.isBeforeFirst()) {
-                JDAUtils.redBuilder("Fatal Error","Attempted to update database information for user " + cloudCityBot2.getServer().getMemberById(memberId).getAsMention() + " but they dont have an entry in the database",cloudCityBot2.getServer().getSelfMember(), cloudCityBot2.getServer().getTextChannelById(617062477812989980L));
+                JDAUtils.redBuilder("Fatal Error", "Attempted to update database information for user " + cloudCityBot2.getServer().getMemberById(memberId).getAsMention() + " but they dont have an entry in the database", cloudCityBot2.getServer().getSelfMember(), cloudCityBot2.getServer().getTextChannelById(617062477812989980L));
+                try {
+                    statement.executeUpdate("INSERT INTO UserStatistics(UserID) VALUES(" + memberId + ");");
+                } catch (SQLException ex) {
+                    JDAUtils.redBuilder("Fatal Error", "Attempted to insert the user " + cloudCityBot2.getServer().getMemberById(memberId).getAsMention() + " into the database but there was an error: " + ex.getMessage(), cloudCityBot2.getServer().getSelfMember(), cloudCityBot2.getServer().getTextChannelById(617062477812989980L));
+                }
+
             }
 
             res.first();
@@ -72,13 +80,15 @@ public class StatisticsHandler {
             }
 
             if (levelUps > 0) {
+                if (!JDAUtils.hasRole(CloudCityBot2.getInstance().getServer().getMemberById(memberId), getRank(currentLevel + levelUps).getValue(), true)) {
+                    JDAUtils.addRoleToMemberByName(CloudCityBot2.getInstance().getServer().getMemberById(memberId), getRank(currentLevel + levelUps).getValue());
+                    JDAUtils.removeRoleFromMember(CloudCityBot2.getInstance().getServer().getMemberById(memberId), getLastRank(currentLevel + levelUps).getValue());
+                }
                 statement.executeUpdate("UPDATE UserStatistics SET level = " + (currentLevel + levelUps) + " WHERE userId = " + memberId);
-                System.out.println("Upping user level to " + levelUps);
                 calculateCoins(currentLevel, memberId, levelUps);
             }
             statement.executeQuery("UPDATE UserStatistics SET xp = " + (currentXp + xp) + " WHERE userId = " + memberId);
 
-            System.out.println("Setting xp to " + currentXp + " + " + xp);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -97,9 +107,8 @@ public class StatisticsHandler {
     private void calculateCoins(int level, long memberId, int levelUps) {
         double coins = 0;
         for (int i = 0; i < levelUps; i++) {
-            coins +=  baseCoinsPerLevel + Math.round((level + i) * coinFactorOfLevel * 10.0) / 10.0;
+            coins += baseCoinsPerLevel + Math.round((level + i) * coinFactorOfLevel * 10.0) / 10.0;
         }
-
 
 
         DatabaseConnectionHandler handler = CloudCityBot2.getInstance().getDbHandler();
@@ -210,7 +219,29 @@ public class StatisticsHandler {
     }
 
     public void receivedMessage(long memberId) {
-        calculateExperienceMessage(memberId,1);
+        calculateExperienceMessage(memberId, 1);
         updateMessageCount(memberId);
+    }
+
+    public Map.Entry<Integer, String> getRank(int level) {
+        for (Map.Entry<Integer, String> entry : rolesPerLevel.entrySet()) {
+            if (entry.getKey() <= level)
+                return entry;
+        }
+        return null;
+    }
+
+    public Map.Entry<Integer, String> getLastRank(int level) {
+        int lastLevel = 0;
+        for (Map.Entry<Integer, String> entry : rolesPerLevel.entrySet()) {
+
+            if (entry.getKey() <= level) {
+                int finalLastLevel = lastLevel;
+                return rolesPerLevel.entrySet().stream().filter(integerStringEntry -> integerStringEntry.getKey() == finalLastLevel).collect(Collectors.toList()).get(0);
+            }
+
+            lastLevel = entry.getKey();
+        }
+        return null;
     }
 }

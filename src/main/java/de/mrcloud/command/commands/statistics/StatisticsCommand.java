@@ -1,10 +1,10 @@
-package de.mrcloud.command.commands;
+package de.mrcloud.command.commands.statistics;
 
 import de.mrcloud.command.Command;
 import de.mrcloud.main.CloudCityBot2;
-import de.mrcloud.utils.JDAUtils;
-import de.mrcloud.utils.Settings;
-import de.mrcloud.utils.SqlUtils;
+import de.mrcloud.utils.discord.JDAUtils;
+import de.mrcloud.utils.settings.Settings;
+import de.mrcloud.utils.sql.SqlUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -19,9 +19,9 @@ import java.sql.Connection;
 import static de.mrcloud.listeners.statistics.StatisticsHandler.xpNeededForFirstLevel;
 import static de.mrcloud.listeners.statistics.StatisticsHandler.xpNeededForLevelUpGrowthFactor;
 
-public class ChannelTimeCommand extends Command {
+public class StatisticsCommand extends Command {
 
-    public ChannelTimeCommand() {
+    public StatisticsCommand() {
         super("stats", "", "", Category.STATISTICS, 709298267208548433L);
     }
 
@@ -49,8 +49,8 @@ public class ChannelTimeCommand extends Command {
                     + "**CHANNEL ZEIT (Dieser Monat):** \n " + getFormattedTimeThisMonth(member) + "\n \n"
                     + "**NACHRICHTEN:** \n" + SqlUtils.getSqlColumnInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), "messageCount", member.getId(), "UserStatistics")
                     + "\n \n **Level:** " + currentLevel
-                    + "\n \n **XP:** " + SqlUtils.getSqlColumnInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), "xp", member.getId(), "UserStatistics") + " / " + (Math.round((xpNeededForFirstLevel * Math.pow(xpNeededForLevelUpGrowthFactor, currentLevel)) * 10.0) / 10.0)
-                    + "\n \n **Coins:** " + SqlUtils.getSqlColumnInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), "coins", member.getId(), "Users"));
+                    + "\n \n **XP:** " + SqlUtils.getSqlCollumDouble(CloudCityBot2.getInstance().getDbHandler().getConnection(), "xp", member.getId(), "UserStatistics") + " / " + (Math.round((xpNeededForFirstLevel * Math.pow(xpNeededForLevelUpGrowthFactor, currentLevel)) * 10.0) / 10.0)
+                    + "\n \n **Coins:** " + SqlUtils.getSqlCollumDouble(CloudCityBot2.getInstance().getDbHandler().getConnection(), "coins", member.getId(), "Users"));
             textChannel.sendMessage(embedBuilder.build()).queue();
         } else {
             int currentLevel = SqlUtils.getSqlColumnInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), "level", message.getMentionedMembers().get(0).getId(), "UserStatistics");
@@ -63,8 +63,8 @@ public class ChannelTimeCommand extends Command {
                     + "**CHANNEL ZEIT (Dieser Monat):** \n " + getFormattedTimeThisMonth(message.getMentionedMembers().get(0)) + "\n \n"
                     + "**NACHRICHTEN:** \n" + SqlUtils.getSqlColumnInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), "messageCount", message.getMentionedMembers().get(0).getId(), "UserStatistics")
                     + "\n \n **Level:** " + currentLevel
-                    + "\n \n **XP:** " + SqlUtils.getSqlColumnInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), "xp", message.getMentionedMembers().get(0).getId(), "UserStatistics") + " / " + (Math.round((xpNeededForFirstLevel * Math.pow(xpNeededForLevelUpGrowthFactor, currentLevel)) * 10.0) / 10.0)
-                    + "\n \n **Coins:** " + SqlUtils.getSqlColumnInt(CloudCityBot2.getInstance().getDbHandler().getConnection(), "coins", message.getMentionedMembers().get(0).getId(), "Users"));
+                    + "\n \n **XP:** " + SqlUtils.getSqlCollumDouble(CloudCityBot2.getInstance().getDbHandler().getConnection(), "xp", message.getMentionedMembers().get(0).getId(), "UserStatistics") + " / " + (Math.round((xpNeededForFirstLevel * Math.pow(xpNeededForLevelUpGrowthFactor, currentLevel)) * 10.0) / 10.0)
+                    + "\n \n **Coins:** " + SqlUtils.getSqlCollumDouble(CloudCityBot2.getInstance().getDbHandler().getConnection(), "coins", message.getMentionedMembers().get(0).getId(), "Users"));
             textChannel.sendMessage(embedBuilder.build()).queue();
         }
 

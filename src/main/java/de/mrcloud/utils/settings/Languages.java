@@ -1,4 +1,4 @@
-package de.mrcloud.utils;
+package de.mrcloud.utils.settings;
 
 import java.util.LinkedHashMap;
 

@@ -1,5 +1,7 @@
 package de.mrcloud.utils;
 
+import de.mrcloud.utils.discord.JDAUtils;
+import de.mrcloud.utils.settings.Settings;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.ArrayList;

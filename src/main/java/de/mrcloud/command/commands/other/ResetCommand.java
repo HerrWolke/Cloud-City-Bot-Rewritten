@@ -1,8 +1,8 @@
-package de.mrcloud.command.commands;
+package de.mrcloud.command.commands.other;
 
 import de.mrcloud.command.Command;
 import de.mrcloud.main.CloudCityBot2;
-import de.mrcloud.utils.Static;
+import de.mrcloud.utils.settings.Static;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

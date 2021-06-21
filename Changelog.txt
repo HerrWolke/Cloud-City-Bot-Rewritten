@@ -1,19 +1,30 @@
 *TODO*
 -Among Us LFG Listeners
+-Reworking Database
+-Removing Data from Database
+-change the awful sql code to a connection pool (dependency already added)
+-refactoring for beta
+-implement shop system
 
 *WIP*
--better statistics
+-shop system
+-coin system (advanced)
+-reworking auto channel settings
+-first minigame
+-shop base
+
+*CHANGES*
+-renamed some classes
+-refactored code
 
 *ADDED/FINISHED*
--basic statistics
--time will be saved if the bot is shut down
-
+-advanced statistics
 
 *FINISHED*
-/
+-better statistics (channeltime lifetime, this month, last month, xp and coins system, message counter)
+-auto channels (settings)
 
 *BUGFIXES*
 A BUG WHERE:
-/
-
-
+-sql error on join
+-not inserting when sql fails

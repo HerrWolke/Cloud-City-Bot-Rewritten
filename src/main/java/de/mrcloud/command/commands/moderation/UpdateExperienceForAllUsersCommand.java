@@ -1,4 +1,4 @@
-package de.mrcloud.command.commands;
+package de.mrcloud.command.commands.moderation;
 
 import de.mrcloud.command.Command;
 import de.mrcloud.main.CloudCityBot2;

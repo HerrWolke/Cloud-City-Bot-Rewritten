@@ -1,8 +1,8 @@
-package de.mrcloud.command.commands;
+package de.mrcloud.command.commands.moderation;
 
 import de.mrcloud.command.Command;
 import de.mrcloud.listeners.moderation.DefenseListener;
-import de.mrcloud.utils.Static;
+import de.mrcloud.utils.settings.Static;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 

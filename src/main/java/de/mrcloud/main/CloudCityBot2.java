@@ -1,10 +1,10 @@
 package de.mrcloud.main;
 
 
-import de.mrcloud.command.Registerer;
-import de.mrcloud.listeners.AutoChannelCreation;
+import de.mrcloud.command.CommandRegistry;
+import de.mrcloud.listeners.member.AutoChannelCreation;
 import de.mrcloud.listeners.CommandExecutor;
-import de.mrcloud.listeners.JoinListener;
+import de.mrcloud.listeners.member.JoinListener;
 import de.mrcloud.listeners.amongus.AmongUsLFGVoice;
 import de.mrcloud.listeners.amongus.AmongUsLookingForGroupListener;
 import de.mrcloud.listeners.moderation.DefenseListener;
@@ -14,8 +14,8 @@ import de.mrcloud.listeners.statistics.MessageCountListener;
 import de.mrcloud.listeners.statistics.StatisticsHandler;
 import de.mrcloud.sql.DatabaseConnectionHandler;
 import de.mrcloud.utils.ChannelDuet;
-import de.mrcloud.utils.Settings;
-import de.mrcloud.utils.Utils;
+import de.mrcloud.utils.settings.Settings;
+import de.mrcloud.utils.other.Utils;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -40,6 +40,7 @@ public class CloudCityBot2 {
     private ShardManager shardMan;
     private DatabaseConnectionHandler dbHandler;
     private StatisticsHandler timeHandler;
+    private CommandRegistry registry;
 
     public CloudCityBot2() throws LoginException {
         instance = this;
@@ -71,7 +72,7 @@ public class CloudCityBot2 {
 
 
             if (sc.next().equals("main")) {
-                builder = DefaultShardManagerBuilder.createDefault(de.mrcloud.utils.Settings.TOKEN, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_BANS, GatewayIntent.GUILD_EMOJIS, GatewayIntent.GUILD_INVITES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGE_TYPING, GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.DIRECT_MESSAGES).setMemberCachePolicy(MemberCachePolicy.ALL).enableCache(CacheFlag.ACTIVITY);
+                builder = DefaultShardManagerBuilder.createDefault(Settings.TOKEN, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_BANS, GatewayIntent.GUILD_EMOJIS, GatewayIntent.GUILD_INVITES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGE_TYPING, GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.DIRECT_MESSAGES).setMemberCachePolicy(MemberCachePolicy.ALL).enableCache(CacheFlag.ACTIVITY);
 
             } else {
                 builder = DefaultShardManagerBuilder.createDefault(Settings.TESTING_TOKEN, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_BANS, GatewayIntent.GUILD_EMOJIS, GatewayIntent.GUILD_INVITES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGE_TYPING, GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.DIRECT_MESSAGES).setMemberCachePolicy(MemberCachePolicy.ALL).enableCache(CacheFlag.ACTIVITY);
@@ -87,7 +88,8 @@ public class CloudCityBot2 {
 
         Settings.loadSettings();
 
-        new Registerer();
+
+        registry = new CommandRegistry();
         //builder.build() connect the bot to Discord
         shardMan = builder.build();
         TurnOffListener();
@@ -238,6 +240,10 @@ public class CloudCityBot2 {
 
     public StatisticsHandler getTimeHandler() {
         return timeHandler;
+    }
+
+    public CommandRegistry getRegistry() {
+        return registry;
     }
 }
 

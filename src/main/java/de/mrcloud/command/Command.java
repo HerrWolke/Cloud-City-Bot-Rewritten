@@ -71,6 +71,6 @@ public abstract class Command {
     }
 
     public enum Category {
-        STAFF, OTHER, STATISTICS, DEBUG
+        STAFF, OTHER, STATISTICS, DEBUG, ECONOMY, GAME
     }
 }

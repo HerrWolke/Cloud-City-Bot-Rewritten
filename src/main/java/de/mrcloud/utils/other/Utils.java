@@ -1,4 +1,4 @@
-package de.mrcloud.utils;
+package de.mrcloud.utils.other;
 
 import java.io.*;
 import java.util.Scanner;

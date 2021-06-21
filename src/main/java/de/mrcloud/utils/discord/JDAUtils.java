@@ -1,4 +1,4 @@
-package de.mrcloud.utils;
+package de.mrcloud.utils.discord;
 
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -483,6 +483,7 @@ public class JDAUtils {
                 .limit(limit)
                 .collect(Collectors.toList());
     }
+
 
 
 }

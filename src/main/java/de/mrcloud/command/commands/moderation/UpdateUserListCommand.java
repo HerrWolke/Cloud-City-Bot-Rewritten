@@ -1,8 +1,8 @@
-package de.mrcloud.command.commands;
+package de.mrcloud.command.commands.moderation;
 
 import de.mrcloud.command.Command;
 import de.mrcloud.main.CloudCityBot2;
-import de.mrcloud.utils.JDAUtils;
+import de.mrcloud.utils.discord.JDAUtils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

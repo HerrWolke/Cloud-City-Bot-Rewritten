@@ -5,7 +5,8 @@
     "is-on-cooldown": "Bitte benutze dies nur 1 mal pro Minute. Du musst noch %s Sekunden warten.",
     "join-error": "Bitte wähle mindestens eine Sache aus!",
     "stats-title": "Deine Statistiken",
-    "stats-desc": "%s Tage, %s Stunde, %s Minuten, %s Sekunden"
+    "stats-desc": "%s Tage, %s Stunde, %s Minuten, %s Sekunden",
+    "args-mismatch": "Dieser Command benötigt %s Argumente, du hast aber %s Argumente übergeben"
   },
   "english": {
     "settings-message": "Choose a number between 1️⃣ -> \uD83D\uDD1F. \n Or reply with a custom number in this channel",
@@ -13,6 +14,7 @@
     "is-on-cooldown": "Sorry, please only uses this every 1 Minute. You still have to wait %s seconds",
     "join-error": "Please choose at least one thing!",
     "stats-title": "Your Statistics",
-    "stats-desc": " %s Days,  %s Minutes,  %s Hours,  %s Seconds"
+    "stats-desc": " %s Days,  %s Minutes,  %s Hours,  %s Seconds",
+    "args-mismatch": "This command requires %s arguments but you supplied %s!"
   }
 }

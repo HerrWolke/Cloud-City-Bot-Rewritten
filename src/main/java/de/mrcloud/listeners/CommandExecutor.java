@@ -1,7 +1,7 @@
 package de.mrcloud.listeners;
 
 import de.mrcloud.command.Command;
-import de.mrcloud.utils.Settings;
+import de.mrcloud.main.CloudCityBot2;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -25,7 +25,7 @@ public class CommandExecutor extends ListenerAdapter {
                 if (i > 0) args[i - 1] = splitContent[i];
             }
 
-            for (Command cmd : Settings.commands) {
+            for (Command cmd : CloudCityBot2.getInstance().getRegistry().getCommands()) {
 
                 if ((Command.PREFIX + cmd.name).equalsIgnoreCase(command)) {
 

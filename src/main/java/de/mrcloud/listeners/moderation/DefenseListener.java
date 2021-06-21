@@ -1,6 +1,6 @@
 package de.mrcloud.listeners.moderation;
 
-import de.mrcloud.utils.Static;
+import de.mrcloud.utils.settings.Static;
 import net.dv8tion.jda.api.audit.ActionType;
 import net.dv8tion.jda.api.audit.AuditLogEntry;
 import net.dv8tion.jda.api.audit.AuditLogOption;

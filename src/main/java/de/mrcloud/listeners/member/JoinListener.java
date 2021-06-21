@@ -1,10 +1,10 @@
-package de.mrcloud.listeners;
+package de.mrcloud.listeners.member;
 
 import de.mrcloud.main.CloudCityBot2;
-import de.mrcloud.utils.JDAUtils;
+import de.mrcloud.utils.discord.JDAUtils;
 import de.mrcloud.utils.NewJoinedMember;
-import de.mrcloud.utils.Settings;
-import de.mrcloud.utils.SqlUtils;
+import de.mrcloud.utils.settings.Settings;
+import de.mrcloud.utils.sql.SqlUtils;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
@@ -42,8 +42,9 @@ public class JoinListener extends ListenerAdapter {
             ResultSet resultSetCheck = statement.executeQuery("SELECT * FROM Users WHERE userID = " + member.getUser().getId() + ";");
 
             if (!resultSetCheck.next()) {
-                statement.executeQuery("INSERT INTO Users(UserName,dateJoined,UserID)" + "\n" + "VALUES('" + member.getUser().getName() + "','" + formated + "'," + member.getId() + ");");
-                statement.executeQuery("INSERT INTO UserStatistics(UserID)" + "\n" + "VALUES(" + member.getId() + ");");
+                System.out.println();
+                statement.executeQuery("INSERT INTO Users(UserName,dateJoined,UserID) VALUES('" + member.getUser().getName() + "','" + formated + "'," + member.getId() + ");");
+                statement.executeQuery("INSERT INTO UserStatistics(UserID) VALUES(" + member.getId() + ");");
             }
 
         } catch (SQLException e1) {
